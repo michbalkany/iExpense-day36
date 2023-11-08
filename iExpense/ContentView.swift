@@ -4,38 +4,41 @@
 //
 //  Created by Mich balkany on 11/8/23.
 //
-import Observation
+
 import SwiftUI
 
-struct SecondView: View{
-    @Environment(\.dismiss) var dismiss
-    let name: String
-    var body: some View{
-        Text("hello \(name)")
-        Button("Dismiss") {
-            dismiss()
-        }
-    }
-}
-
-
 struct ContentView: View {
-    @State private var showingSheet = false
+    
+    @State private var numbers = [Int]()
+    @State private var currentNumber = 1
     
     var body: some View {
-        Button("Show sheet") {
-            showingSheet.toggle()
-        }
-        .sheet(isPresented: $showingSheet) {
-            SecondView(name: "mich")
+        NavigationStack {
+            VStack {
+                List {
+                    // we only add the ForEach because adding the delete modifier only works with a ForEach as opposed to placing the rows in the list
+                    ForEach(numbers, id: \.self){
+                        Text("Row \($0)")
+                    }
+                    .onDelete(perform: removeRows)
+                }
+                Button("add new number"){
+                    numbers.append(currentNumber)
+                    currentNumber += 1
+                }
+            }
+            .toolbar{
+                EditButton()
+            }
         }
     }
+    
+    func removeRows(at offSets: IndexSet) {
+        numbers.remove(atOffsets: offSets)
+    }
+    
 }
 
 #Preview {
     ContentView()
 }
-
-
-
-
