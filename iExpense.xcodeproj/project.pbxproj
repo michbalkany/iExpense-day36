@@ -13,7 +13,7 @@
 		C57476692AFBCC0100119972 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57476682AFBCC0100119972 /* Preview Assets.xcassets */; };
 		C57476762AFD336500119972 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57476752AFD336400119972 /* AddView.swift */; };
 		C57476782B02D5D300119972 /* View-ExpenseStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57476772B02D5D300119972 /* View-ExpenseStyle.swift */; };
-		C574767A2B03BA8C00119972 /* ExpenseSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57476792B03BA8C00119972 /* ExpenseSection.swift */; };
+		C574767A2B03BA8C00119972 /* ExpenseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57476792B03BA8C00119972 /* ExpenseList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +24,7 @@
 		C57476682AFBCC0100119972 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C57476752AFD336400119972 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		C57476772B02D5D300119972 /* View-ExpenseStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-ExpenseStyle.swift"; sourceTree = "<group>"; };
-		C57476792B03BA8C00119972 /* ExpenseSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseSection.swift; sourceTree = "<group>"; };
+		C57476792B03BA8C00119972 /* ExpenseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +59,9 @@
 			children = (
 				C57476612AFBCBFD00119972 /* iExpenseApp.swift */,
 				C57476632AFBCBFD00119972 /* ContentView.swift */,
-				C57476792B03BA8C00119972 /* ExpenseSection.swift */,
-				C57476752AFD336400119972 /* AddView.swift */,
+				C57476792B03BA8C00119972 /* ExpenseList.swift */,
 				C57476772B02D5D300119972 /* View-ExpenseStyle.swift */,
+				C57476752AFD336400119972 /* AddView.swift */,
 				C57476652AFBCC0100119972 /* Assets.xcassets */,
 				C57476672AFBCC0100119972 /* Preview Content */,
 			);
@@ -147,7 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C57476642AFBCBFD00119972 /* ContentView.swift in Sources */,
-				C574767A2B03BA8C00119972 /* ExpenseSection.swift in Sources */,
+				C574767A2B03BA8C00119972 /* ExpenseList.swift in Sources */,
 				C57476622AFBCBFD00119972 /* iExpenseApp.swift in Sources */,
 				C57476762AFD336500119972 /* AddView.swift in Sources */,
 				C57476782B02D5D300119972 /* View-ExpenseStyle.swift in Sources */,

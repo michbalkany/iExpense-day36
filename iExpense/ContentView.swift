@@ -4,87 +4,78 @@
 //
 //  Created by Mich balkany on 11/8/23.
 //
-
+import SwiftData
 import SwiftUI
 
-struct ExpenseItem: Identifiable, Codable, Equatable {
-    var id = UUID()
+@Model
+class ExpenseItem {
+    
     let name: String
     let type: String
     let amount: Double
+    
+    init(name: String, type: String, amount: Double) {
+        self.name = name
+        self.type = type
+        self.amount = amount
+    }
 }
 
-@Observable
-class Expenses {
-    var items = [ExpenseItem]() {
-        didSet {
-            if let encoded = try? JSONEncoder().encode(items) {
-                UserDefaults.standard.set(encoded, forKey: "Items")
-            }
-        }
-    }
-    var personalItems: [ExpenseItem] {
-        items.filter { $0.type == "Personal"}
-    }
-    var businessItems: [ExpenseItem] {
-        items.filter { $0.type == "Business"}
-    }
-    
-    init() {
-        if let savedItems = UserDefaults.standard.data(forKey: "Items") {
-            if let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems) {
-                items = decodedItems
-                return
-            }
-        }
-        items = []
-    }
-    
-}
+
 
 struct ContentView: View {
-    @State private var expenses = Expenses()
     
+    @State private var showingAddExpense = false
+    @State private var sortOrder = [
+        SortDescriptor(\ExpenseItem.name),
+        SortDescriptor(\ExpenseItem.amount, order: .reverse)
+    ]
     
     
     var body: some View {
         NavigationStack {
-            List {
-                ExpenseSection(title: "Business", expenses: expenses.businessItems, deleteItems: removeBusinessItems)
-                ExpenseSection(title: "Personal", expenses: expenses.personalItems, deleteItems: removePersonalItems)
-            }
-            .navigationTitle("iExpense")
-            .toolbar {
-                NavigationLink {
-                    AddView(expenses: expenses)
-                } label: {
-                    Label("Add Expense", systemImage: "plus")
+            ExpenseList(sortOrder: sortOrder)
+                .navigationTitle("iExpense")
+                .toolbar {
+                    Button("Add Expense", systemImage: "plus") {
+                        showingAddExpense = true
+                    }
+                    
+                    Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                        Picker("Sort by:", selection: $sortOrder) {
+                            Text("Name (A-Z)")
+                                .tag([
+                                    SortDescriptor(\ExpenseItem.name),
+                                    SortDescriptor(\ExpenseItem.amount),
+                                ])
+                            Text("Name (Z-A)")
+                                .tag([
+                                    SortDescriptor(\ExpenseItem.name, order: .reverse),
+                                    SortDescriptor(\ExpenseItem.amount),
+                                ])
+                            
+                            Text("Amount (Cheapest First)")
+                                .tag([
+                                    SortDescriptor(\ExpenseItem.amount),
+                                    SortDescriptor(\ExpenseItem.name),
+                                ])
+                            
+                            Text("NAmount (Most Expensive First)")
+                                .tag([
+                                    SortDescriptor(\ExpenseItem.amount, order: .reverse),
+                                    SortDescriptor(\ExpenseItem.name),
+                                ])
+                        }
+                    }
                 }
+                .sheet(isPresented: $showingAddExpense){
+                   AddView()
+                    }
             }
         }
     }
-    func removeItems(at offsets: IndexSet, in inputArray: [ExpenseItem]) {
-        var objectsToDelete = IndexSet()
-        
-        for offset in offsets {
-            let item = inputArray[offset]
-            
-            if let index = expenses.items.firstIndex(of: item) {
-                objectsToDelete.insert(index)
-            }
-        }
-        expenses.items.remove(atOffsets: objectsToDelete)
-    }
-    
-    func removePersonalItems(at offsets: IndexSet) {
-        removeItems(at: offsets, in: expenses.personalItems)
-    }
-    
-    func removeBusinessItems(at offsets: IndexSet) {
-        removeItems(at: offsets, in: expenses.businessItems)
-    }
-}
 
 #Preview {
     ContentView()
+        .modelContainer(for: ExpenseItem.self)
 }
