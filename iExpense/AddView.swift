@@ -18,7 +18,7 @@ struct AddView: View {
     
     
     let localCurrency = Locale.current.currency?.identifier ?? "USD"
-    let types = ["Business", "Personal"]
+    static let types = ["Business", "Personal"]
     
     
     var body: some View {
@@ -27,7 +27,7 @@ struct AddView: View {
                 TextField("Name", text: $name)
                 
                 Picker("Type", selection: $type) {
-                    ForEach(types, id: \.self) {
+                    ForEach(Self.types, id: \.self) {
                         Text($0)
                     }
                 }
